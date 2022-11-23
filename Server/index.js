@@ -22,6 +22,12 @@ mongoose.connect(DATABASE_URI, {
   useNewUrlParser: true, useUnifiedTopology: true
 })
 
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+
 app.use('/auth', authRouter)
 app.use('/article', articleRouter)
 app.listen(PORT, () => {
