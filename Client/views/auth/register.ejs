@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BLOGiT</title>
+
+  </head>
+  <body class="min-h-screen bg-gray-900">
+    <%- include('header') %>
+    <div class="flex items-center justify-center h-[90vh]">
+      <center class="w-full">
+        <div class="max-w-2xl mx-auto">
+          <div
+            class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <form class="space-y-3" action="/auth/register" method='post'>
+              <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                Sign in
+              </h3>
+              <div>
+                <label
+                  for="first_name"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  name="first_name"
+                  id="first_name"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="John"
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  for="last_name"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >Last Name</label
+                >
+                <input
+                  type="text"
+                  name="last_name"
+                  id="last_name"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="Doe"
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  for="username"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >username</label
+                >
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="johndoe"
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  for="email"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >Your email</label
+                >
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="johndoe@example.com"
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  for="password"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >Your password</label
+                >
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  for="re_password"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >Re-Enter password</label
+                >
+                <input
+                  type="password"
+                  name="re_password"
+                  id="re_password"
+                  placeholder="••••••••"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required=""
+                />
+              </div>
+              <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                Already have an account ?
+                <a
+                  href="/auth/login"
+                  class="text-blue-700 hover:underline dark:text-blue-500"
+                  >Login in</a
+                >
+              </div>
+              <button
+                type="submit"
+                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Register your account
+              </button>
+            </form>
+          </div>
+        </div>
+      </center>
+    </div>
+    <%- include('footer') %>
+  </body>
+</html>

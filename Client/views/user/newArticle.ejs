@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BLOGiT</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
+  </head>
+  <body class="min-h-screen bg-gray-900">
+    <%- include('header') %>
+    <br><br>
+    <center>
+        <div class="max-w-[80vw] min-h-screen bg-gray-800 border border-gray-600 rounded-lg">
+            <form action="/user/newArticle" class="space-y-6" method="post">
+                <h3 class="text-xl font-medium text-gray-200">
+                    Edit Article
+                </h3>
+                <div>
+                    <label for="title" class="text-sm font-medium text-gray-200 mb-2">Title</label>
+                    <input type="text"
+                            name="title"
+                            id="title"
+                            class = "w-[50%] bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    >
+                </div>
+                <div>
+                    <label for="desc" class="text-sm font-medium text-gray-200 mb-2">Description</label>
+                    <input type="text"
+                            name="desc"
+                            id="desc"
+                            class = "w-[50%] bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    >
+                </div>
+                <div class="inline-flex flex-row content-center align-items-center w-full align-content-center justify-evenly min-h-[100%]">
+                    <div class="w-[45%]">
+                        <label for="content" class="text-lg font-medium text-gray-200 mb-2">Content</label>
+                        <textarea name="content"
+                                id="content"
+                                rows="25"
+                                class = "min-h-[95%] float-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                onkeyup="preview1()"
+                                ></textarea>
+                    </div>
+                    <div class="w-[45%]">
+                        <label for="preview" class="text-lg font-medium text-gray-200 mb-2">Preview</label>
+                        <p id="preview" class="mt-2 text-gray-200 break-words"></p>
+                    </div>
+                </div>
+                <br><br>
+                <button
+                type="submit"
+                class="w-[50%] mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                Save Article
+                </button>
+            </form>
+        </div>
+    </center>
+    <%- include('footer') %>
+    <script>
+        function preview1() {
+            let preview = document.getElementById("preview");
+            let markdown = document.getElementById("content").value;
+            let title = document.getElementById("title").value;
+            let desc = document.getElementById("desc").value;
+            console.log(markdown);
+            preview.innerHTML = title +'<br>'+ desc+'<br>' + marked(markdown).replaceAll('\n', '<br>');
+        }
+    </script>
+  </body>
+</html>
