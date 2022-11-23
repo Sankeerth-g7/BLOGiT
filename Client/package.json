@@ -5,7 +5,8 @@
   "main": "client.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon client.js"
+    "start-dev": "nodemon client.js",
+    "start": "node client.js"
   },
   "author": "Rishi <rishikeshaluguveli@gmail.com>",
   "license": "ISC",
