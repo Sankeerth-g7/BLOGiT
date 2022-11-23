@@ -26,8 +26,8 @@ router.get('/blogs', (req, res) => {
             }
             articles.sort((o) => { return o.date })
             articles.reverse()
-            res.send(articles)
-            // res.render('home/blogs', {articles: articles})
+            // res.send(articles)
+            res.render('home/blogs', {articles: articles})
         }
         else{
             res.status(404).render(404)
