@@ -9,7 +9,9 @@ const dotenv = require('dotenv')
 
 
 dotenv.config({ path: "./utils/config.env" });
+
 JWT_SECRET = process.env.JWT_SECRET
+BACKEND_SECRET = process.env.BACKEND_SECRET;
 
 exports.generateToken = (user) => {
   const token = jwt.sign(
@@ -38,6 +40,22 @@ exports.checkUser = async (req, res, next) => {
     next();
   }
 };
+
+
+exports.checkSecret = (req, res, next) => {
+  const secret = req.body.BACKEND_SECRET;
+  if (secret === process.env.BACKEND_SECRET) {
+    next();
+  }
+  else{
+    res.send({
+      succes: false,
+      message: "You are not authorized to access this route"
+    })
+  }
+}
+
+
 
 exports.checkAdmin = (req, res, next) => {
   const token = req.body.token;

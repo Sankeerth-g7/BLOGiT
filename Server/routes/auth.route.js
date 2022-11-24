@@ -7,7 +7,7 @@ const middleware = require('../middleware')
 
 
 
-router.post('/register', middleware.checkUser, (req, res) => {
+router.post('/register', middleware.checkSecret, middleware.checkUser, (req, res) => {
     const user = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -38,7 +38,7 @@ router.post('/register', middleware.checkUser, (req, res) => {
     }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', middleware.checkSecret, async (req, res) => {
     const user = {
         username: req.body.username,
         password: req.body.password,
@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
 })
 
 
-router.post('/deleteuser', middleware.checkAdmin, (req, res) => {
+router.post('/deleteuser', middleware.checkSecret, middleware.checkAdmin, (req, res) => {
     const user = {
         username: req.body.username,
         userToDelete: req.body.userToDelete
@@ -108,7 +108,7 @@ router.post('/deleteuser', middleware.checkAdmin, (req, res) => {
 })
 
 
-router.post('/allUsers', middleware.checkAdmin, async (req, res) => {
+router.post('/allUsers', middleware.checkSecret, middleware.checkAdmin, async (req, res) => {
     const info = {
         username: req.body.username,
         token: req.body.token
@@ -140,7 +140,7 @@ router.post('/allUsers', middleware.checkAdmin, async (req, res) => {
 })
 
 
-router.post('/logout', middleware.checkSignIn, (req, res) => {
+router.post('/logout', middleware.checkSecret, middleware.checkSignIn, (req, res) => {
     res.send({
         success: true,
         message: "Logged Out"

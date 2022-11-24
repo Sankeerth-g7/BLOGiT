@@ -64,7 +64,6 @@
             let markdown = document.getElementById("content").value;
             let title = document.getElementById("title").value;
             let desc = document.getElementById("desc").value;
-            console.log(markdown);
             preview.innerHTML = title +'<br>'+ desc+'<br>' + marked(markdown).replaceAll('\n', '<br>');
         }
     </script>

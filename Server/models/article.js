@@ -58,7 +58,7 @@ articleSchema.pre('validate', function(next) {
     }
   
     if (this.content) {
-      this.sanitizedHtml = dompurify.sanitize(marked(this.content))
+      this.sanitizedHtml = dompurify.sanitize(marked(this.content).replaceAll('\n', '<br>'))
     }
     next()
   })

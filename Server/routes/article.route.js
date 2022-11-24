@@ -6,7 +6,7 @@ const middleware = require('../middleware');
 
 
 
-router.post('/newArticle', middleware.checkSignIn, middleware.checkArticle, (req, res) => {
+router.post('/newArticle', middleware.checkSecret, middleware.checkSignIn, middleware.checkArticle, (req, res) => {
     const article = {
         title: req.body.title,
         desc: req.body.desc,
@@ -39,7 +39,7 @@ router.post('/newArticle', middleware.checkSignIn, middleware.checkArticle, (req
 })
 
 
-router.post('/editArticle', middleware.checkSignIn, (req, res) => {
+router.post('/editArticle', middleware.checkSecret, middleware.checkSignIn, (req, res) => {
     const info = {
         title: req.body.title,
         desc: req.body.desc,
@@ -77,7 +77,7 @@ router.post('/editArticle', middleware.checkSignIn, (req, res) => {
     }
 })
 
-router.post('/deleteArticle', middleware.checkSignIn, (req, res) => {
+router.post('/deleteArticle', middleware.checkSecret, middleware.checkSignIn, (req, res) => {
     const article = {
         slug: req.body.slug,
         username: req.body.username,
@@ -110,11 +110,11 @@ router.post('/deleteArticle', middleware.checkSignIn, (req, res) => {
 
 
 
-router.post('/getArticle', async (req, res) => {
+router.post('/getArticle', middleware.checkSecret, async (req, res) => {
     const article = {
         slug: req.body.slug,
     }
-    // console.log(article)
+    console.log(article)
     if (article.slug) {
         const foundArticle = await Article.findOne({
             slug: article.slug
@@ -142,7 +142,7 @@ router.post('/getArticle', async (req, res) => {
 
 
 
-router.post('/addLike', middleware.checkSignIn, async (req, res) => {
+router.post('/addLike', middleware.checkSecret, middleware.checkSignIn, async (req, res) => {
     const article = {
         title: req.body.title,
         username: req.body.username,
@@ -181,7 +181,7 @@ router.post('/addLike', middleware.checkSignIn, async (req, res) => {
 })
 
 
-router.post('/addComment', middleware.checkSignIn, async (req, res) => {
+router.post('/addComment', middleware.checkSecret, middleware.checkSignIn, async (req, res) => {
     const info = {
         title: req.body.title,
         username: req.body.username,
@@ -227,7 +227,7 @@ router.post('/addComment', middleware.checkSignIn, async (req, res) => {
 
 
 
-router.post('/getComments', async (req, res) => {
+router.post('/getComments', middleware.checkSecret, async (req, res) => {
     const info = {
         username: req.body.username,
         title: req.body.title,
@@ -257,8 +257,9 @@ router.post('/getComments', async (req, res) => {
     }
 })
 
-router.post('/getAllArticles', async (req, res) => {
+router.post('/getAllArticles', middleware.checkSecret, async (req, res) => {
     const foundArticles = await Article.find();
+    console.log("Getting all articles")
     if (foundArticles){
         res.send({
             success: true,
@@ -273,7 +274,7 @@ router.post('/getAllArticles', async (req, res) => {
     }
 })
 
-router.post('/getUserArticles', middleware.checkSignIn, async (req, res) => {
+router.post('/getUserArticles', middleware.checkSecret, middleware.checkSignIn, async (req, res) => {
     const info = {
         username: req.body.username
     }
@@ -302,7 +303,7 @@ router.post('/getUserArticles', middleware.checkSignIn, async (req, res) => {
     }
 })
 
-router.post('/getLikes', (req, res) => {
+router.post('/getLikes', middleware.checkSecret, (req, res) => {
     const info = {
         username: req.body.username,
         title: req.body.title

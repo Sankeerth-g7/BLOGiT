@@ -8,7 +8,6 @@ const cookieParser = require("cookie-parser");
 const request = require('request')
 const dotenv = require('dotenv');
 
-
 dotenv.config({ path: "../Server/utils/config.env" });
 const app = express();
 app.set('view engine', 'ejs');
@@ -19,6 +18,7 @@ app.use(cookieParser());
 
 
 const backend = process.env.BACKEND_URL
+const BACKEND_SECRET = process.env.BACKEND_SECRET
 
 app.get('/blog/:slug', (req, res) => {
     let options = {
@@ -26,7 +26,8 @@ app.get('/blog/:slug', (req, res) => {
         method: 'post',
         body: {
             username: req.cookies.username,
-            slug: req.params.slug
+            slug: req.params.slug,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -47,4 +48,4 @@ app.use('/auth', authRouter);
 app.use('/', homeRouter);
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
-app.listen(process.env.PORT || 3000, () => console.log('Listening on port 3201'));
+app.listen(process.env.PORT || process.env.FRONTEND_PORT || 3000, () => console.log(`Listening on port ${process.env.PORT || process.env.FRONTEND_PORT || 3000}`));

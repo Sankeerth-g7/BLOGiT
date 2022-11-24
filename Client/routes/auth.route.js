@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: "../Server/utils/config.env" });
 const backend = process.env.BACKEND_URL
+const BACKEND_SECRET = process.env.BACKEND_SECRET
 
 
 router.get('/login', (req, res) => {
@@ -18,7 +19,8 @@ router.post('/login', (req, res) => {
         method: 'post',
         body: {
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -62,7 +64,8 @@ router.post('/register', (req, res) => {
                 last_name: req.body.last_name,
                 username: req.body.username,
                 password: req.body.password,
-                email: req.body.email
+                email: req.body.email,
+                BACKEND_SECRET: BACKEND_SECRET
             },
             json: true
         }
@@ -83,7 +86,8 @@ router.get('/logout', (req, res) => {
         method: 'post',
         body: {
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }

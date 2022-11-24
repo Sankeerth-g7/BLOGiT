@@ -14,6 +14,7 @@ dotenv.config({ path: "../Server/utils/config.env" });
 
 
 const backend = process.env.BACKEND_URL
+const BACKEND_SECRET = process.env.BACKEND_SECRET
 
 
 router.get('/dashboard', (req, res) => {
@@ -34,7 +35,8 @@ router.post('/newArticle', (req, res) => {
             content: req.body.content,
             desc: req.body.desc,
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -60,7 +62,8 @@ router.get('/blogs', (req, res) => {
         method: "post",
         body: {
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -97,7 +100,8 @@ router.get('/editArticle/:slug', (req, res) => {
         body: {
             slug: req.params.slug,
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -127,7 +131,8 @@ router.post('/editArticle', (req, res) => {
             slug: req.body.slug,
             desc: req.body.desc,
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -154,7 +159,8 @@ router.get('/deleteArticle/:slug', (req, res) => {
         body: {
             slug: req.params.slug,
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }

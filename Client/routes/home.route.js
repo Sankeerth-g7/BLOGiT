@@ -8,6 +8,11 @@ const dotenv = require('dotenv');
 dotenv.config({ path: "../Server/utils/config.env" });
 
 const backend = process.env.BACKEND_URL
+const BACKEND_SECRET = process.env.BACKEND_SECRET
+
+
+
+
 router.get('/', (req, res) => {
     res.render('home/index');
 })
@@ -16,6 +21,9 @@ router.get('/blogs', (req, res) => {
     let options = {
         url: `${backend}/article/getAllArticles`,
         method: 'post',
+        body: {
+            BACKEND_SECRET: BACKEND_SECRET
+        },
         json: true
     }
     request(options, (err, response, body) => {

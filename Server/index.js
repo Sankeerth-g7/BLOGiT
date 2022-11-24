@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const authRouter = require('./routes/auth.route')
 const articleRouter = require('./routes/article.route')
 const dotenv = require('dotenv');
+const middleware = require('./middleware');
 
 
 
@@ -14,7 +15,7 @@ app.use(bodyParser.json());
 
 const DATABASE_URI = process.env.DATABASE_URI
 // console.log(DATABASE_URI)
-const PORT = process.env.PORT || 5002
+const PORT = process.env.PORT || process.env.BACKEND_PORT || 5002
 
 
 
@@ -23,7 +24,7 @@ mongoose.connect(DATABASE_URI, {
 })
 
 
-app.get('/', (req, res) => {
+app.get('/', middleware.checkSecret, (req, res) => {
   res.send('Hello World!')
 })
 

@@ -64,8 +64,9 @@
         function preview1() {
             let preview = document.getElementById("preview");
             let markdown = document.getElementById("content").value;
-            console.log(markdown);
-            preview.innerHTML = marked(markdown);
+            let title = document.getElementById("title").value;
+            let desc = document.getElementById("desc").value;
+            preview.innerHTML = title +'<br>'+ desc+'<br>' + marked(markdown).replaceAll('\n', '<br>');
         }
     </script>
   </body>

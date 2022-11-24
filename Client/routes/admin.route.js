@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: "../Server/utils/config.env" });
 const backend = process.env.BACKEND_URL
-
+const BACKEND_SECRET = process.env.BACKEND_SECRET
 
 
 router.get('/dashboard', (req, res) => {
@@ -21,7 +21,8 @@ router.get('/allBlogs', (req, res) => {
         method: 'post',
         body: {
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -48,7 +49,8 @@ router.get('/users', (req, res) => {
         method: 'post',
         body: {
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -68,7 +70,8 @@ router.get('/blogs', (req, res) => {
         method: 'post',
         body: {
             username: req.cookies.username,
-            token: req.cookies.token
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
@@ -100,7 +103,8 @@ router.post('/deleteUser', (req, res) => {
         body: {
             username: req.cookies.username,
             token: req.cookies.token,
-            userToDelete: req.body.userToDelete
+            userToDelete: req.body.userToDelete,
+            BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
