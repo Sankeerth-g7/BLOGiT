@@ -10,15 +10,30 @@
 <body class="min-h-screen bg-gray-900">
     <%- include('header') %>
     <br><br>
-    <div class="grid items-center justify-center mb-3 space-y-3 mt-3">
-        <% for (let i = 0; i < articles.length; i++) { %>
-            <%- include('articleCard', {
-                title: articles[i].title,
-                desc: articles[i].desc,
-                slug: articles[i].slug
-            }) %> 
-        <% } %>
-    </div> 
+    <% if (articles.length > 0) { %>
+        <div class="grid items-center justify-center mb-3 space-y-3 mt-3">
+            <% for (let i = 0; i < articles.length; i++) { %>
+                <%- include('articleCard', {
+                    title: articles[i].title,
+                    desc: articles[i].desc,
+                    slug: articles[i].slug
+                }) %> 
+            <% } %>
+        </div> 
+    <% } else { %>
+        <div class="flex items-center justify-center">
+            <center class="w-full">
+                <div class="max-w-2xl mx-auto">
+                    <div
+                        class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                            No articles found
+                        </h3>
+                    </div>
+                </div>
+            </center>
+        </div>
+    <% } %>
     <br><br>
     <%- include('footer') %> 
 </body>

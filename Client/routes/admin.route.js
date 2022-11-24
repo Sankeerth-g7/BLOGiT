@@ -10,8 +10,27 @@ const BACKEND_SECRET = process.env.BACKEND_SECRET
 
 
 router.get('/dashboard', (req, res) => {
-    res.render('admin/dashboard')
+    let options = {
+        url: `${backend}/article/getCount`,
+        method: 'post',
+        body: {
+            username: req.cookies.username,
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
+        },
+        json: true,
+    }
+    // console.log(options)
+    request(options, (err, response, body) => {
+        if (body && body.success){
+            res.render('admin/dashboard', {userCount: body.userCount, articleCount: body.articleCount})
+        }
+        else{
+            res.redirect('404')
+        }
+    })
 })
+
 
 
 

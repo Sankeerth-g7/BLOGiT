@@ -12,6 +12,7 @@ dotenv.config({ path: "./utils/config.env" });
 
 JWT_SECRET = process.env.JWT_SECRET
 BACKEND_SECRET = process.env.BACKEND_SECRET;
+ADMIN_USERNAME = process.env.ADMIN_USERNAME
 
 exports.generateToken = (user) => {
   const token = jwt.sign(
@@ -61,7 +62,7 @@ exports.checkAdmin = (req, res, next) => {
   const token = req.body.token;
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    if (decoded.username === "thisisadmin") {
+    if (decoded.username === ADMIN_USERNAME) {
       next();
     } else {
       res.send({
@@ -82,7 +83,7 @@ exports.checkSignIn = (req, res, next) => {
   const token = req.body.token;
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    if (decoded.username || decoded.username === "thisisadmin") {
+    if (decoded.username || decoded.username === ADMIN_USERNAME) {
       next();
     } else {
       console.log('Auth Failed')

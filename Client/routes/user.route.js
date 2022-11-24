@@ -6,6 +6,7 @@ const { JSDOM } = require('jsdom')
 const dompurify = createDomPurify(new JSDOM().window)
 const { marked } = require('marked')
 const dotenv = require('dotenv');
+const { reset } = require('nodemon');
 
 
 
@@ -15,12 +16,30 @@ dotenv.config({ path: "../Server/utils/config.env" });
 
 const backend = process.env.BACKEND_URL
 const BACKEND_SECRET = process.env.BACKEND_SECRET
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME
+
 
 
 router.get('/dashboard', (req, res) => {
-    res.render('user/dashboard')
+    let options = {
+        url: `${backend}/article/getCountUser`,
+        method: 'post',
+        body: {
+            username: req.cookies.username,
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
+        },
+        json: true
+    }
+    request(options, (err, response, body) => {
+        if (body && body.success){
+            res.render('user/dashboard', {count: body.articleCount})
+        }
+        else{
+            res.redirect('/auth/login')
+        }
+    })
 })
-
 router.get('/newArticle', (req, res) => {
     res.render('user/newArticle')
 })
@@ -43,8 +62,8 @@ router.post('/newArticle', (req, res) => {
     // console.log(options)
     request(options, (err, response, body) => {
         // console.log(body)
-        if (body.success){
-            if (req.cookies.username === 'thisisadmin'){
+        if (body && body.success){
+            if (req.cookies.username === ADMIN_USERNAME){
                 res.redirect('/admin/blogs')
             }else{
                 res.redirect('/user/blogs')
@@ -70,7 +89,7 @@ router.get('/blogs', (req, res) => {
     // console.log(options)
     request(options, (err, response, body) => {
         // console.log(body)
-        if (body.success){
+        if (body && body.success){
             var articles = Array()
             for (var i = 0; i < body.foundArticles.length; i++){
                 articles.push(body.foundArticles[i])
@@ -83,14 +102,33 @@ router.get('/blogs', (req, res) => {
             res.render('user/blogs', {articles: []})
         }
         else{
-            res.status(404).render('401')
+            res.status(404).render('404')
         }
     })
 })
 
 
 router.get('/profile', (req, res) => {
-    res.render('user/profile')
+    const options = {
+        url: `${backend}/auth/getUser`,
+        method: 'post',
+        body: {
+            username: req.cookies.username,
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
+        },
+        json: true
+    }
+    request(options, (err, response, body) => {
+        // console.log(body)
+        if (body && body.success){
+            res.render('user/profile', {message: "", first_name: body.foundUser.first_name, last_name: body.foundUser.last_name, email: body.foundUser.email, username: body.foundUser.username})
+        }
+        else{
+            res.render('error', {message: body.message || "Something Went Wrong"})
+        }
+    })
+    // res.render('user/profile', {message: "", first_name: req.cookies.first_name, last_name: req.cookies.last_name, email: req.cookies.email})
 })
 
 router.get('/editArticle/:slug', (req, res) => {
@@ -107,7 +145,7 @@ router.get('/editArticle/:slug', (req, res) => {
     }
     request(options, (err, response, body) => {
         // console.log(body)
-        if (body.success){
+        if (body && body.success){
             var markdown = (text) => {
             return dompurify.sanitize(marked(text))
             }
@@ -137,8 +175,8 @@ router.post('/editArticle', (req, res) => {
         json: true
     }
     request(options, (err, response, body) => {
-        if (body.success){
-            if (req.cookies.username === 'thisisadmin'){
+        if (body && body.success){
+            if (req.cookies.username === ADMIN_USERNAME){
                 res.redirect('/admin/blogs')
             }else{
                 res.redirect('/user/blogs')
@@ -166,9 +204,9 @@ router.get('/deleteArticle/:slug', (req, res) => {
     }
     // console.log(options)
     request(options, (err, response, body) => {
-        console.log(body)
-        if (body.success){
-            if (req.cookies.username === 'thisisadmin'){
+        // console.log(body)
+        if (body && body.success){
+            if (req.cookies.username === ADMIN_USERNAME){
                 res.redirect('/admin/allblogs')
             }else{
             res.redirect('/user/blogs')

@@ -14,7 +14,7 @@ const BACKEND_SECRET = process.env.BACKEND_SECRET
 
 
 router.get('/', (req, res) => {
-    res.render('home/index');
+    res.render('home/index', {userLoggedIn: req.cookies.username ? true : false});
 })
 
 router.get('/blogs', (req, res) => {

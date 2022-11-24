@@ -87,7 +87,7 @@ router.post('/deleteuser', middleware.checkSecret, middleware.checkAdmin, (req, 
             username: user.userToDelete,
         })
         .then(result => {
-            console.log(result)
+            // console.log(result)
             console.log("User Deleted")
             res.send({
                 success: true,
@@ -117,7 +117,7 @@ router.post('/allUsers', middleware.checkSecret, middleware.checkAdmin, async (r
         const foundUsers = await User.find();
         if (foundUsers){
             for (let i = 0;i < foundUsers.length;i++){
-                if (foundUsers[i].username == "thisisadmin"){
+                if (foundUsers[i].username == ADMIN_USERNAME){
                     foundUsers.splice(i, 1)
                 }
             }
@@ -149,16 +149,90 @@ router.post('/logout', middleware.checkSecret, middleware.checkSignIn, (req, res
 
 
 
-// router.post('/updateuser', middleware.checkAdmin, (req, res) => {
-//     const user = {
-//         username: req.body.username,
-//         userToUpdate: req.body.userToUpdate,
-//         first_name: req.body.first_name,
-//         last_name: req.body.last_name,
-//         email: req.body.email,
-//         password: req.body.password
-//     }
-// })
+router.post('/changePassword', middleware.checkSecret, middleware.checkSignIn, (req, res) => {
+    const user = {
+        username: req.body.username,
+        password: req.body.old_password,
+        newPassword: req.body.password
+    }
+    // console.log(user)
+    if (user.username && user.password && user.newPassword) {
+        User.findOne({
+            username: user.username,
+        })
+        .then(foundUser => {
+            if (foundUser){
+                if (user.password === foundUser.password) {
+                    foundUser.password = user.newPassword
+                    foundUser.save()
+                    .then(() => {
+                        res.send({
+                            success: true,
+                            message: "Password Changed"
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        res.send({
+                            success: false,
+                            message: "Error Changing Password"
+                        })
+                    })
+                }
+                else{
+                    res.send({
+                        success: false,
+                        message: "Password Mismatch"
+                    })
+                }
+            }
+            else{
+                res.send({
+                    success: false,
+                    message: "User Not Found"
+                })
+            }
+        })
+    }
+})
+
+
+router.post('/getUser', middleware.checkSecret, middleware.checkSignIn, (req, res) => {
+    const username = req.body.username
+    if (username) {
+        User.findOne({
+            username: username,
+        })
+        .then(foundUser => {
+            if (foundUser){
+                res.send({
+                    success: true,
+                    foundUser
+                })
+            }
+            else{
+                res.send({
+                    success: false,
+                    message: "User Not Found"
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({
+                success: false,
+                message: "Error Getting User"
+            })
+        })
+    }
+    else{
+        res.send({
+            success: false
+        })
+    }
+})
+
+
 
 
 module.exports = router

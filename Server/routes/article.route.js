@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Article = require('../models/article');
+const User = require('../models/user');
 const middleware = require('../middleware');
 
 
@@ -114,7 +115,7 @@ router.post('/getArticle', middleware.checkSecret, async (req, res) => {
     const article = {
         slug: req.body.slug,
     }
-    console.log(article)
+    // console.log(article)
     if (article.slug) {
         const foundArticle = await Article.findOne({
             slug: article.slug
@@ -331,6 +332,47 @@ router.post('/getLikes', middleware.checkSecret, (req, res) => {
         })
     }
 })
+
+
+router.post('/getCount', middleware.checkSecret, middleware.checkAdmin, (req, res) => {
+    // console.log("Getting count")
+    const userCount = User.countDocuments()
+    const articleCount = Article.countDocuments()
+    Promise.all([userCount, articleCount])
+    .then(result => {
+        res.send({
+            success: true,
+            userCount: result[0],
+            articleCount: result[1]
+        })
+    })
+    .catch(err => {
+        res.send({
+            success: false
+        })
+    })
+})
+
+
+
+router.post('/getCountUser', middleware.checkSecret, middleware.checkSignIn, (req, res) => {
+    Article.countDocuments({
+        username: req.body.username
+    })
+    .then(result => {
+        res.send({
+            success: true,
+            articleCount: result > 0 ? result : 0
+        })  
+    })
+    .catch(err => {
+        res.send({
+            success: false
+        })
+    })
+    
+})
+
 
 
 module.exports = router;

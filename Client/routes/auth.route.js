@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: "../Server/utils/config.env" });
 const backend = process.env.BACKEND_URL
 const BACKEND_SECRET = process.env.BACKEND_SECRET
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME
 
 
 router.get('/login', (req, res) => {
@@ -30,7 +31,7 @@ router.post('/login', (req, res) => {
             res.clearCookie('token', {path : '/admin'})
             res.cookie('token', body.token, {path: '/'})
             res.cookie('username', body.username, {path: '/'})
-            if (body.username === 'thisisadmin') {
+            if (body.username === ADMIN_USERNAME) {
                 res.redirect('/admin/dashboard')
             }
             else{
@@ -81,32 +82,63 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
+    // var options = {
+    //     url: `${backend}/auth/logout`,
+    //     method: 'post',
+    //     body: {
+    //         username: req.cookies.username,
+    //         token: req.cookies.token,
+    //         BACKEND_SECRET: BACKEND_SECRET
+    //     },
+    //     json: true
+    // }
+    // // console.log(options.body.username, options.body.token);
+    // if (options.body.username && options.body.token){
+    //     request(options, (err, response, body) => {
+    //         if (body.success){
+    //             // console.log("Clearing Cookies");
+    //             res.clearCookie('token');
+    //             res.clearCookie('username');
+    //             res.redirect('/');
+    //         }
+    //     })
+    // }
+    // else{
+    //     res.redirect('/')
+    // }
+    res.clearCookie('token');
+    res.clearCookie('username');
+    res.redirect('/');    
+})
+
+router.post('/changePassword', (req, res) => {
     var options = {
-        url: `${backend}/auth/logout`,
+        url: `${backend}/auth/changePassword`,
         method: 'post',
         body: {
             username: req.cookies.username,
             token: req.cookies.token,
+            old_password: req.body.old_password,
+            password: req.body.new_password,
             BACKEND_SECRET: BACKEND_SECRET
         },
         json: true
     }
-    // console.log(options.body.username, options.body.token);
-    if (options.body.username && options.body.token){
+    if (options.body.username && options.body.old_password && options.body.password){
         request(options, (err, response, body) => {
             if (body.success){
-                // console.log("Clearing Cookies");
-                res.clearCookie('token');
-                res.clearCookie('username');
-                res.redirect('/');
+                res.render('user/profile', {message: "Password Changed Successfully"})
+            }
+            else{
+                res.render('error', {message: body.message})
             }
         })
     }
     else{
-        res.redirect('/')
+        res.render('error', {message: "Invalid Request"})
     }
-    
 })
+
 
 
 

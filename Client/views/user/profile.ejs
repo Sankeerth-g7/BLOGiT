@@ -5,10 +5,100 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLOGiT</title>
-
+    <script>
+      function validate(){
+        // document.write('fdg')
+        re_password = document.getElementById('re_password').value;
+        password = document.getElementById('new_password').value;
+        message = document.getElementById('message');
+        if(re_password != password){
+          message.innerHTML = "Passwords do not match";
+        }
+        else{
+          message.innerHTML = "";
+        }
+      }
+    </script>
 </head>
 <body class="min-h-screen bg-gray-900">
     <%- include('header') %>
+    <div class="flex items-center justify-center h-[90vh]">
+      <center class="w-full">
+        <div class="max-w-2xl mx-auto">
+          <div
+            class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <form class="space-y-3" action="/auth/changePassword" method='post'>
+              <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                Hello <%= first_name %> <%= last_name %>
+              </h3>
+              <h3 class="text-sm font-small text-gray-900 dark:text-white">
+                Username : <%= username %> 
+              </h3>
+              <h3 class="text-sm font-small text-gray-900 dark:text-white">
+                Email : <%= email %> 
+              </h3>
+              <div>
+                <label
+                  for="old_password"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >Old password</label
+                >
+                <input
+                  type="password"
+                  name="old_password"
+                  id="old_password"
+                  placeholder="••••••••"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  for="new_password"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >New password</label
+                >
+                <input
+                  type="password"
+                  name="new_password"
+                  id="new_password"
+                  placeholder="••••••••"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  for="re_password"
+                  class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+                  >Re-Enter password</label
+                >
+                <input
+                  type="password"
+                  name="re_password"
+                  id="re_password"
+                  placeholder="••••••••"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required=""
+                  onkeyup="validate()"
+                />
+              </div>
+              <p id="message" class = "text-gray-200 text-sm font-small flex items-center justify-center"></p>
+              <% if (message) { %>
+                <p class = "text-gray-200 text-sm font-small flex items-center justify-center" id="message1"><%= message  %></p>
+               <% } %>
+              <button
+                type="submit"
+                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Change password
+              </button>
+            </form>
+          </div>
+        </div>
+      </center>
+    </div>
     <%- include('footer') %> 
 </body>
 </html>

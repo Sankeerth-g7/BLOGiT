@@ -5,20 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BLOGiT</title>
-    
   </head>
   <body class="min-h-screen bg-gray-900">
     <%- include('header') %>
-    <center>
-    <div class="text-gray-200 mx-auto mt-6 mb-[10vh]">
-        <h1 class="text-gray-200 text-7xl">Welcome Admin!!!</h1>
-    </div></center>
-    <div class="grid grid-cols-2 bg-gray-900">
-        <%- include('chartCard') %> 
-        <%- include('chartCard') %> 
-
+    <div class="flex flex-row items-center justify-center space-x-[3vw] my-[4vh]">
+      <div class="flex flex-col text-gray-200 h-[35vh] w-[50vh] bg-gray-900">
+        <p class="text-gray-200 text-[10vh] flex items-center justify-center">
+          <%= userCount %> 
+        </p>
+        <p class="text-gray-200 text-[5vh] flex items-center justify-center">
+          Users Signed Up
+        </p>
+      </div>
+      <div class="flex flex-col text-gray-200 h-[35vh] w-[50vh] bg-gray-900">
+        <p class="text-gray-200 text-[10vh] flex items-center justify-center">
+          <%= articleCount %>
+        </p>
+        <p class="text-gray-200 text-[5vh] flex items-center justify-center">
+          Articles Published
+        </p>
+      </div>
     </div>
     <%- include('footer') %>
   </body>
 </html>
-  
