@@ -35,7 +35,7 @@ router.get('/blogs', (req, res) => {
             articles.sort((o) => { return o.date })
             articles.reverse()
             // res.send(articles)
-            res.render('home/blogs', {articles: articles})
+            res.render('home/blogs', {articles: articles, userLoggedIn: req.cookies.username ? true : false})
         }
         else{
             res.status(404).render(404)
@@ -46,7 +46,7 @@ router.get('/blogs', (req, res) => {
 
 
 router.get('/about', (req, res) => {
-    res.render('home/about')
+    res.render('home/about', {userLoggedIn: req.cookies.username ? true : false})
 })
 
 module.exports = router;
