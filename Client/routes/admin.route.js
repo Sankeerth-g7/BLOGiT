@@ -53,7 +53,7 @@ router.get('/allBlogs', (req, res) => {
             }
             articles.sort((o) => { return o.date })
             articles.reverse()
-            res.render('admin/allblogs', {articles: articles})
+            res.render('admin/allBlogs', {articles: articles})
         }
         else{
             res.status(404).render(404)
