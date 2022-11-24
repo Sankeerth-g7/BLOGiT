@@ -41,7 +41,7 @@ router.post('/login', (req, res) => {
         else{
             // console.log(body)
             if (body.message){
-                res.render('Error', {message: body.message})
+                res.render('error', {message: body.message})
             }
             else{
                 res.status(404).render('404')
