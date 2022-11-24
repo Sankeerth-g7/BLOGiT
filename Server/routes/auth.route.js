@@ -169,7 +169,7 @@ router.post('/changePassword', middleware.checkSecret, middleware.checkSignIn, (
                         res.send({
                             success: true,
                             message: "Password Changed",
-                            foundUser
+                            foundUser: foundUser
                         })
                     })
                     .catch(err => {
@@ -193,6 +193,13 @@ router.post('/changePassword', middleware.checkSecret, middleware.checkSignIn, (
                     message: "User Not Found"
                 })
             }
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({
+                success: false,
+                message: "Error Changing Password"
+            })
         })
     }
 })
