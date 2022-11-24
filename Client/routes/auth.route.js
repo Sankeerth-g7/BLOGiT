@@ -127,7 +127,7 @@ router.post('/changePassword', (req, res) => {
     if (options.body.username && options.body.old_password && options.body.password){
         request(options, (err, response, body) => {
             if (body.success){
-                res.render('user/profile', {message: "Password Changed Successfully"})
+                res.render('user/profile', {message: "Password Changed Successfully", first_name: body.foundUser.first_name, last_name: body.foundUser.last_name, email: body.foundUser.email, username: body.foundUser.username})
             }
             else{
                 res.render('error', {message: body.message})

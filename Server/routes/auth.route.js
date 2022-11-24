@@ -168,7 +168,8 @@ router.post('/changePassword', middleware.checkSecret, middleware.checkSignIn, (
                     .then(() => {
                         res.send({
                             success: true,
-                            message: "Password Changed"
+                            message: "Password Changed",
+                            foundUser
                         })
                     })
                     .catch(err => {
