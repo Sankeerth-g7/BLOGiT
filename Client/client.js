@@ -19,6 +19,7 @@ app.use(cookieParser());
 
 const backend = process.env.BACKEND_URL
 const BACKEND_SECRET = process.env.BACKEND_SECRET
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME
 
 app.get('/blog/:slug', (req, res) => {
     let options = {
@@ -34,7 +35,7 @@ app.get('/blog/:slug', (req, res) => {
     request(options, (err, response, body) => {
         if (body.success) {
             body.result.created_at = new Date(body.result.created_at).toLocaleDateString()
-            res.status(200).render('blog', {article: body.result, username: req.cookies.username, userLoggedIn: req.cookies.username ? true : false})
+            res.status(200).render('blog', {article: body.result, username: req.cookies.username, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
             res.render('blog')

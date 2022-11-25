@@ -49,4 +49,5 @@ router.get('/about', (req, res) => {
     res.render('home/about', {userLoggedIn: req.cookies.username ? true : false})
 })
 
+
 module.exports = router;

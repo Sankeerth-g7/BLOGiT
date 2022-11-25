@@ -14,11 +14,11 @@
                 title: articles[i].title,
                 desc: articles[i].desc,
                 slug: articles[i].slug,
-                canEdit: true
+                canEdit: canEdit,
+                canDelete: false
             }) %> 
         <% } %>
     </div> 
     <%- include('footer') %> 
-    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
 </body>
 </html>

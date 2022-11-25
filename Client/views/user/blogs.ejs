@@ -16,7 +16,9 @@
                 <%- include('articleCard', {
                     title: articles[i].title,
                     desc: articles[i].desc,
-                    slug: articles[i].slug
+                    slug: articles[i].slug,
+                    canEdit: canEdit,
+                    canDelete: canEdit
                 }) %> 
             <% } %>
         </div> 

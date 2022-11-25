@@ -95,10 +95,10 @@ router.get('/blogs', (req, res) => {
             }
             articles.sort((o) => { return o.date })
             articles.reverse()
-            res.render('user/blogs', {articles: articles})
+            res.render('user/blogs', {articles: articles, canEdit: true})
         }
         else if(body.message == "No Articles To Display"){
-            res.render('user/blogs', {articles: []})
+            res.render('user/blogs', {articles: [], canEdit: true})
         }
         else{
             res.status(404).render('404')
@@ -216,6 +216,34 @@ router.get('/deleteArticle/:slug', (req, res) => {
         }
     })
 })
+
+router.get('/allBlogs', (req, res) => {
+    let options = {
+        url: `${backend}/article/getAllArticles`,
+        method: 'post',
+        body: {
+            username: req.cookies.username,
+            token: req.cookies.token,
+            BACKEND_SECRET: BACKEND_SECRET
+        },
+        json: true
+    }
+    request(options, (err, response, body) => {
+        if (body.success) {
+            var articles = Array()
+            for (var i = 0; i < body.foundArticles.length; i++){
+                articles.push(body.foundArticles[i])
+            }
+            articles.sort((o) => { return o.date })
+            articles.reverse()
+            res.render('user/allBlogs', {articles: articles, canEdit: false})
+        }
+        else{
+            res.status(404).render(404)
+        }
+    })
+})
+
 
 
 router.get('*', (req, res) => {
