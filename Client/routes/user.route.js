@@ -32,7 +32,7 @@ router.get('/dashboard', (req, res) => {
     }
     request(options, (err, response, body) => {
         if (body && body.success){
-            res.render('user/dashboard', {count: body.articleCount})
+            res.render('user/dashboard', {count: body.articleCount, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
             res.redirect('/auth/login')
@@ -40,7 +40,7 @@ router.get('/dashboard', (req, res) => {
     })
 })
 router.get('/newArticle', (req, res) => {
-    res.render('user/newArticle')
+    res.render('user/newArticle', {userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
 })
 
 
@@ -95,10 +95,10 @@ router.get('/blogs', (req, res) => {
             }
             articles.sort((o) => { return o.date })
             articles.reverse()
-            res.render('user/blogs', {articles: articles, canEdit: true})
+            res.render('user/blogs', {articles: articles, canEdit: true, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else if(body.message == "No Articles To Display"){
-            res.render('user/blogs', {articles: [], canEdit: true})
+            res.render('user/blogs', {articles: [], canEdit: true, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
             res.status(404).render('404')
@@ -121,7 +121,7 @@ router.get('/profile', (req, res) => {
     request(options, (err, response, body) => {
         // console.log(body)
         if (body && body.success){
-            res.render('user/profile', {message: "", first_name: body.foundUser.first_name, last_name: body.foundUser.last_name, email: body.foundUser.email, username: body.foundUser.username})
+            res.render('user/profile', {message: "", first_name: body.foundUser.first_name, last_name: body.foundUser.last_name, email: body.foundUser.email, username: body.foundUser.username, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
             res.render('error', {message: body.message || "Something Went Wrong"})
@@ -148,7 +148,7 @@ router.get('/editArticle/:slug', (req, res) => {
             var markdown = (text) => {
             return dompurify.sanitize(marked(text))
             }
-            res.render('user/articleEdit', {article: body.result, markdown: markdown})
+            res.render('user/articleEdit', {article: body.result, markdown: markdown, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
             res.status(404).render('404')
@@ -236,7 +236,7 @@ router.get('/allBlogs', (req, res) => {
             }
             articles.sort((o) => { return o.date })
             articles.reverse()
-            res.render('user/allBlogs', {articles: articles, canEdit: false})
+            res.render('user/allBlogs', {articles: articles, canEdit: false, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
             res.status(404).render(404)

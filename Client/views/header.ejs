@@ -4,7 +4,13 @@
   class="px-2 sm:px-4 py-2.5 bg-gray-900 w-full top-0 left-0 border-b border-gray-600"
 >
   <div class="container flex flex-wrap items-center justify-between mx-auto">
-    <a href="/" class="flex items-center">
+    <a <% if (adminLoggedIn) { %>
+      href="/admin/dashboard"
+    <% } else if (userLoggedIn) { %>
+      href = "/user/dashboard" 
+    <% } else { %> 
+      href = "/"
+     <% } %> class="flex items-center">
       <img src="/logo.svg" class="h-6 mr-3 sm:h-9" alt="BLOGiT Logo" />
       <span
         class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"

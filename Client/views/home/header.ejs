@@ -5,23 +5,42 @@
   class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 w-full top-0 left-0 border-b border-gray-200 dark:border-gray-600"
 >
   <div class="container flex flex-wrap items-center justify-between mx-auto">
-    <a href="/" class="flex items-center">
+    <a <% if (adminLoggedIn) { %>
+      href="/admin/dashboard"
+    <% } else if (userLoggedIn) { %>
+      href = "/user/dashboard" 
+    <% } else { %> 
+      href = "/"
+     <% } %> class="flex items-center">
       <img src="logo.svg" class="h-6 mr-3 sm:h-9" alt="BLOGiT Logo" />
       <span
         class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
         >BLOGiT</span
       >
     </a>
-    <div class="flex md:order-2">
-      <a href="/auth/login">
-        <button
-          type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Get started
-        </button>
-      </a>
-    </div>
+    <% if (adminLoggedIn || userLoggedIn) { %>
+      <div class="flex md:order-2">
+        <a href="/auth/logout">
+          <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Logout
+          </button>
+        </a>
+      </div>
+    <% } else { %>
+      <div class="flex md:order-2">
+        <a href="/auth/login">
+          <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Get Started
+          </button>
+        </a>
+      </div>
+    <% } %>
     <div
       class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
       id="navbar-sticky"
@@ -31,7 +50,9 @@
       >
         <li>
           <a
-          <% if (userLoggedIn) { %>
+          <% if (adminLoggedIn) { %>
+            href="/admin/dashboard"
+          <% } else if (userLoggedIn) { %>
             href = "/user/dashboard" 
           <% } else { %> 
             href = "/"

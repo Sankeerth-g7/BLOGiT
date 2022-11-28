@@ -9,12 +9,13 @@ dotenv.config({ path: "../Server/utils/config.env" });
 
 const backend = process.env.BACKEND_URL
 const BACKEND_SECRET = process.env.BACKEND_SECRET
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME
 
 
 
 
 router.get('/', (req, res) => {
-    res.render('home/index', {userLoggedIn: req.cookies.username ? true : false});
+    res.render('home/index', { userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false});
 })
 
 router.get('/blogs', (req, res) => {
@@ -35,7 +36,7 @@ router.get('/blogs', (req, res) => {
             articles.sort((o) => { return o.date })
             articles.reverse()
             // res.send(articles)
-            res.render('home/blogs', {articles: articles, userLoggedIn: req.cookies.username ? true : false})
+            res.render('home/blogs', {articles: articles, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
             res.status(404).render(404)
@@ -46,7 +47,7 @@ router.get('/blogs', (req, res) => {
 
 
 router.get('/about', (req, res) => {
-    res.render('home/about', {userLoggedIn: req.cookies.username ? true : false})
+    res.render('home/about', {userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
 })
 
 
