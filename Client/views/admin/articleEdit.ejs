@@ -12,7 +12,7 @@
     <br><br>
     <center>
         <div class="max-w-[80vw] min-h-screen bg-gray-800 border border-gray-600 rounded-lg">
-            <form action="/user/editArticle" class="space-y-6" method="post">
+            <form action="/user/editArticle" class="space-y-6" method="post" onsubmit="validate()">
                 <h3 class="text-xl font-medium text-gray-200">
                     Edit Article
                 </h3>
@@ -23,6 +23,7 @@
                             id="title"
                             class = "w-[50%] bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             value="<%= article.title %>"
+                            required
                     >
                 </div>
                 <div>
@@ -32,6 +33,7 @@
                             id="desc"
                             class = "w-[50%] bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             value="<%= article.desc %>"
+                            required
                     >
                 </div>
                 <div class="inline-flex flex-row content-center align-items-center w-full align-content-center justify-evenly min-h-[100%]">
@@ -42,6 +44,7 @@
                                 rows="25"
                                 class = "min-h-[95%] float-left bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                 onkeyup="preview1()"
+                                required
                                 ><%= article.content %></textarea>
                     </div>
                     <div class="w-[45%]">
@@ -67,6 +70,18 @@
             let title = document.getElementById("title").value;
             let desc = document.getElementById("desc").value;
             preview.innerHTML = title +'<br>'+ desc+'<br>' + marked(markdown).replaceAll('\n', '<br>');
+        }
+        function validate(){
+            // let preview = document.getElementById("preview");
+            let markdown = document.getElementById("content").value;
+            let title = document.getElementById("title").value;
+            let desc = document.getElementById("desc").value;
+            if (desc && title && markdown){
+                return true
+            }
+            else{
+                return false
+            }
         }
     </script>
   </body>

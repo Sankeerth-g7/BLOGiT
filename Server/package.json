@@ -8,7 +8,7 @@
     "start-dev": "nodemon index.js",
     "start": "node index.js"
   },
-  "author": "Rishi <rishikeshaluguveli@gmail.com>",
+  "author": "Sankeerth <20951A04G7@iare.ac.in>",
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",

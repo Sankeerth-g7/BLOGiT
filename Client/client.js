@@ -7,11 +7,12 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const request = require('request')
 const dotenv = require('dotenv');
+const path = require('path')
 
 dotenv.config({ path: "../Server/utils/config.env" });
 const app = express();
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(cookieParser());
