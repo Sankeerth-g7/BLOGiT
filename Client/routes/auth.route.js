@@ -52,7 +52,7 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/register', (req, res) => {
-    res.render('auth/register')
+    res.render('auth/register', {userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
 })
 
 router.post('/register', (req, res) => {
@@ -82,30 +82,6 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-    // var options = {
-    //     url: `${backend}/auth/logout`,
-    //     method: 'post',
-    //     body: {
-    //         username: req.cookies.username,
-    //         token: req.cookies.token,
-    //         BACKEND_SECRET: BACKEND_SECRET
-    //     },
-    //     json: true
-    // }
-    // // console.log(options.body.username, options.body.token);
-    // if (options.body.username && options.body.token){
-    //     request(options, (err, response, body) => {
-    //         if (body.success){
-    //             // console.log("Clearing Cookies");
-    //             res.clearCookie('token');
-    //             res.clearCookie('username');
-    //             res.redirect('/');
-    //         }
-    //     })
-    // }
-    // else{
-    //     res.redirect('/')
-    // }
     res.clearCookie('token');
     res.clearCookie('username');
     res.redirect('/');    

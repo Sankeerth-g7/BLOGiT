@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const middleware = require('../middleware')
+const Article = require('../models/article')
 
 
 
@@ -241,6 +242,49 @@ router.post('/getUser', middleware.checkSecret, middleware.checkSignIn, (req, re
 })
 
 
+
+router.post('/getUserProfile', middleware.checkSecret, (req, res) => {
+    const user = req.body.user
+    if (user) {
+        User.findOne({
+            username: user
+        })
+        .then(async (result) => {
+            if (result){
+                const articleCount = await Article.countDocuments({
+                    username: user
+                })
+                res.send({
+                    success: true,
+                    user: {
+                        username: result.username,
+                        first_name: result.first_name,
+                        last_name: result.last_name,
+                        created_at: result.created_at,
+                        articleCount: articleCount,
+                        email: result.email
+                    }
+                })
+            }
+            else{
+                res.send({
+                    success: false
+                })
+            }
+        })
+        .catch(err => {
+            res.send({
+                success: false
+            })
+        })
+    }
+    else{
+        res.send({
+            success: false
+        })
+    }
+
+})
 
 
 module.exports = router

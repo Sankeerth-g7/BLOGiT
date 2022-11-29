@@ -39,11 +39,33 @@ app.get('/blog/:slug', (req, res) => {
             res.status(200).render('blog', {article: body.result, username: req.cookies.username, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
         }
         else{
-            res.render('blog')
+            res.render('404')
         }
     })
 })
 
+
+app.get('/:user', (req, res) => {
+    let options = {
+        url: `${backend}/auth/getUserProfile`,
+        method: 'post',
+        body: {
+            username: req.cookies.username,
+            user: req.params.user,
+            BACKEND_SECRET: BACKEND_SECRET
+        },
+        json: true
+    }
+    request(options, (err, response, body) => {
+        if (body && body.success){  
+            body.user.created_at = new Date(body.user.created_at).toLocaleDateString()
+            res.render('profile', {user: body.user, userLoggedIn: req.cookies.username ? true : false, adminLoggedIn: req.cookies.username == ADMIN_USERNAME ? true : false})
+        }
+        else{
+            res.status(404).render('404')
+        }
+    })
+})
 
 
 app.use('/auth', authRouter);

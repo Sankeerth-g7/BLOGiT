@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOGiT</title>
+</head>
+<body class="min-h-screen bg-gray-900">
+    <% if (adminLoggedIn) { %>
+        <%- include('admin/header') %>
+      <% } else if (userLoggedIn) { %>
+        <%- include('user/header') %>
+      <% } else { %> 
+        <%- include('header') %>
+       <% } %>
+    <div class="mt-[3vh]">
+        <div class="flex flex-row items-center justify-center space-x-8">
+            <h3 class="text-gray-900 font-medium text-8xl dark:text-gray-200"><%= user.first_name %></h3>
+            <h3 class="text-gray-900 font-medium text-8xl dark:text-gray-200"><%= user.last_name %></h3>
+        </div>
+        <div class="flex flex-col items-center justify-center p-8">
+            <h3 class="text-gray-900 font-medium text-4xl dark:text-gray-200"><%= user.username %></h3>
+            <h3 class="text-gray-900 font-small text-2xl dark:text-gray-200">Joined on: <%= user.created_at %></h3>
+        </div>
+        <div class="flex flex-col items-center justify-center p-8">
+            <h3 class="text-gray-900 font-small text-9xl dark:text-gray-200"><%= user.articleCount %></h3>
+            <h3 class="text-gray-900 font-small text-2xl dark:text-gray-200">Articles</h3>
+        </div>
+        <div class="flex flex-row items-center justify-center p-8">
+            <h3 class="text-gray-900 font-small text-2xl dark:text-gray-200">Contact: <a href="mailto:<%= user.email %>"><%= user.email %></a></h3>
+        </div>
+    </div>
+    <%- include('footer') %>
+</body>
+</html>
