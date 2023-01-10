@@ -15,6 +15,7 @@ Before you begin, make sure you have the following installed on your machine:
 
 ```bash
 git clone https://github.com/Sankeerth-g7/Blogit.git
+```
 
 2. Navigate to the root directory of the project and install the dependencies:
 cd Blogit
