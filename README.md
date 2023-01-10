@@ -18,12 +18,14 @@ git clone https://github.com/Sankeerth-g7/Blogit.git
 ```
 
 2. Navigate to the root directory of the project and install the dependencies:
+```
 cd Blogit
 npm install
-
+```
 3. Create a .env file in the root directory of the project and add the following variables:
+```
 npm run dev
-
+```
 The app will be running at http://localhost:3000.
 
 #Usage
@@ -36,6 +38,8 @@ The app will be running at http://localhost:3000.
 4. You can edit or delete your own blog posts by clicking on the "Edit" or "Delete" button on the blog post page.
 
 #Deployment
-To deploy the app, you will need to build the production version of the client-side code and then start the server:\
+To deploy the app, you will need to build the production version of the client-side code and then start the server:
+```
 npm run build
 npm start
+```
