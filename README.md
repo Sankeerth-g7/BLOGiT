@@ -41,7 +41,8 @@ To set up the Blog Application locally, follow these steps:
 2. Navigate to the project's root directory:
 
    ```bash
-   cd BLOG-APPLICATION
+   cd Blogit
+   cd server
    ```
 
 3. Install the dependencies for the backend:
@@ -68,7 +69,7 @@ To set up the Blog Application locally, follow these steps:
    cd ..
    ```
 
-7. Start the development server:
+7. Start the development server in both server and client directories:
 
    ```bash
    npm run dev
